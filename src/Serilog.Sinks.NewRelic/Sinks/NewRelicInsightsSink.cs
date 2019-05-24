@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog.Core;
 using Serilog.Events;
+using Serilog.Sinks.PeriodicBatching;
 
 namespace Serilog.Sinks.NewRelic.Sinks
 {
-    public class NewRelicInsightsSink : ILogEventSink
+    public class NewRelicInsightsSink : PeriodicBatchingSink
     {
         private readonly IFormatProvider _formatProvider;
         private readonly NewRelicConfigurationOptions _configurationOptions;
@@ -16,15 +21,23 @@ namespace Serilog.Sinks.NewRelic.Sinks
 
         public NewRelicInsightsSink(
             IFormatProvider formatProvider, 
-            NewRelicConfigurationOptions configurationOptions,
-            HttpClient httpClient)
+            NewRelicConfigurationOptions configurationOptions) 
+                : base(batchSizeLimit: 1, period: TimeSpan.FromSeconds(1), queueLimit: 1)
         {
             _formatProvider = formatProvider;
             _configurationOptions = configurationOptions;
-            _httpClient = httpClient;
+            _httpClient = GetHttpClientFromFactory();
         }
-        
-        public async void Emit(LogEvent logEvent)
+
+        protected override async Task EmitBatchAsync(IEnumerable<LogEvent> events)
+        {
+            foreach (var logEvent in events)
+            {
+                await PostToNewRelic(logEvent);
+            }
+        }
+
+        private async Task PostToNewRelic(LogEvent logEvent)
         {
             var insightsEvent = new NewRelicEvent
             {
@@ -52,9 +65,29 @@ namespace Serilog.Sinks.NewRelic.Sinks
 
             using (var content = new StringContent(message))
             {
-                content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-                var response = await _httpClient.SendAsync(httpRequestMessage); //.GetAwaiter().GetResult();
+                httpRequestMessage.Content = content;
+                var response = await _httpClient.SendAsync(httpRequestMessage);
             }
+        }
+        
+        private HttpClient GetHttpClientFromFactory()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection
+                .AddHttpClient("NewRelicSink.Handler",
+                    client => { client.DefaultRequestHeaders.Add("Content-Type", "application/json"); })
+                .ConfigurePrimaryHttpMessageHandler(messageHandler =>
+                {
+                    var handler = new HttpClientHandler();
+                    if (handler.SupportsAutomaticDecompression)
+                    {
+                        handler.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+                    }
+
+                    return handler;
+                });
+            var httpClientFactory = serviceCollection.BuildServiceProvider().GetService<IHttpClientFactory>();
+            return httpClientFactory.CreateClient();
         }
     }
 
