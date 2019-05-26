@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.NewRelic;
 
@@ -10,33 +11,44 @@ namespace SampleApp
     {
         static void Main(string[] args)
         {
+            Serilog.Debugging.SelfLog.Enable(Console.Out);
+            Log.Logger = CreateLoggerWithCodeConfiguration();
+
+            Log.Information("I said hello at time {DateTime}, {CorrelationId}", DateTime.UtcNow, Guid.NewGuid());
+            
+            // This is required so we flush events out before the application closes
+            Log.CloseAndFlush();
+        }
+
+        /// <summary>
+        /// Configures a <see cref="Logger"/> with configuration read from environment variables
+        /// </summary>
+        private static Logger CreateLoggerWithEnvironmentVariableConfiguration()
+        {
             // Configure via environment variables
             var configBuilder = new ConfigurationBuilder()
                 .AddEnvironmentVariables();
             var configuration = configBuilder.Build();
-
             
-            Serilog.Debugging.SelfLog.Enable(Console.Out);
             var logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
-
-            logger.Information("I said hello at time {DateTime}, {CorrelationId}", DateTime.UtcNow, Guid.NewGuid());
-
-            // In a dotnet core application that uses hosting, we would wire up Serilog with 
-            // Dispose to ensure that the log queue is flushed
-            // This is required so we flush events out before the application closes
-            logger.Dispose();
+            return logger;
         }
 
-        /*
-         * Alternately, you can configure via code:
-         *
-         *
+        /// <summary>
+        /// Configures a logger using configuration through the fluent API
+        /// </summary>
+        private static Logger CreateLoggerWithCodeConfiguration()
+        {
+            /*
+             * Alternately, you can configure via code:
+             *
+             */
            var newRelicConfigurationOptions = new NewRelicConfigurationOptions
                {
-                   AccountId = "<your-account-id>",
+                   AccountId = "<your-account-key>",
                    ApplicationName = "ConsoleApp",
                    EnvironmentName = "Development",
                    LicenseKey = "your-license-key"
@@ -46,8 +58,9 @@ namespace SampleApp
                .WriteTo.NewRelicInsights(
                    newRelicConfigurationOptions, 
                    restrictedToMinimumLevel:LogEventLevel.Information)
-               .ReadFrom.Configuration(configuration)
                .CreateLogger();
-         */
+           return logger;
+        }
+        
     }
 }
