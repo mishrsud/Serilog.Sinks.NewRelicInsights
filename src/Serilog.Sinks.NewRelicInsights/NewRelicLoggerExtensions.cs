@@ -1,9 +1,9 @@
 using System;
 using Serilog.Configuration;
 using Serilog.Events;
-using Serilog.Sinks.NewRelic.Sinks;
+using Serilog.Sinks.NewRelicInsights.Sinks;
 
-namespace Serilog.Sinks.NewRelic
+namespace Serilog.Sinks.NewRelicInsights
 {
     public static class NewRelicLoggerExtensions
     {

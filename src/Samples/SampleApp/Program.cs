@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using Serilog.Sinks.NewRelic;
+using Serilog.Sinks.NewRelicInsights;
 
 namespace SampleApp
 {

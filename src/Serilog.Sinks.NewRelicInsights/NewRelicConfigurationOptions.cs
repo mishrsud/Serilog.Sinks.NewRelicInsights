@@ -1,4 +1,4 @@
-namespace Serilog.Sinks.NewRelic
+namespace Serilog.Sinks.NewRelicInsights
 {
     public class NewRelicConfigurationOptions
     {

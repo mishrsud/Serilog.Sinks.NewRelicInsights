@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Serilog.Sinks.NewRelic\Serilog.Sinks.NewRelic.csproj" />
+      <ProjectReference Include="..\..\Serilog.Sinks.NewRelicInsights\Serilog.Sinks.NewRelicInsights.csproj" />
     </ItemGroup>
 
 </Project>

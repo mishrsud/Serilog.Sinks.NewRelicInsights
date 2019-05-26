@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog.Sinks.NewRelic", "Serilog.Sinks.NewRelic\Serilog.Sinks.NewRelic.csproj", "{F7371626-206F-4D6D-95C8-A0C301C8A2DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog.Sinks.NewRelicInsights", "Serilog.Sinks.NewRelicInsights\Serilog.Sinks.NewRelicInsights.csproj", "{F7371626-206F-4D6D-95C8-A0C301C8A2DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "Samples\SampleApp\SampleApp.csproj", "{9E2194FD-C00F-4794-938F-AD0560669E0A}"
 EndProject

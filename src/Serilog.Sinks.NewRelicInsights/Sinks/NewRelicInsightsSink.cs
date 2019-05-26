@@ -9,7 +9,7 @@ using Newtonsoft.Json.Serialization;
 using Serilog.Events;
 using Serilog.Sinks.PeriodicBatching;
 
-namespace Serilog.Sinks.NewRelic.Sinks
+namespace Serilog.Sinks.NewRelicInsights.Sinks
 {
     public class NewRelicInsightsSink : PeriodicBatchingSink
     {
