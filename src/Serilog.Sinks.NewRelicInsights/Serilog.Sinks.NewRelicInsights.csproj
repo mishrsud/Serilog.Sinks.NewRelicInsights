@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>Serilog.Sinks.NewReliceInsights</AssemblyName>
-        <RootNamespace>Serilog.Sinks.NewReliceInsights</RootNamespace>
-        <PackageId>Serilog.Sinks.NewReliceInsights</PackageId>
+        <AssemblyName>Serilog.Sinks.NewRelicInsights</AssemblyName>
+        <RootNamespace>Serilog.Sinks.NewRelicInsights</RootNamespace>
+        <PackageId>Serilog.Sinks.NewRelicInsights</PackageId>
         <Authors>Sudhanshu Mishra</Authors>
         <RepositoryUrl>https://github.com/mishrsud/Serilog.Sinks.NewRelicInsights</RepositoryUrl>
         <PackageTags>newrelic serilog serilog.sink</PackageTags>
@@ -12,7 +12,7 @@
         <Description>A Serilog sink to relay logs to NewRelic Insights API</Description>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <DocumentationFile>.\src\Smi.NetCore.Extensions.Hosting.xml</DocumentationFile>
+        <DocumentationFile>.\Serilog.Sinks.NewRelicInsights.xml</DocumentationFile>
         <NoWarn>1701;1702;1591</NoWarn>
     </PropertyGroup>
     <ItemGroup>
