@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog.Events;
+using Serilog.Debugging;
 using Serilog.Sinks.PeriodicBatching;
 
 namespace Serilog.Sinks.NewRelicInsights.Sinks
@@ -64,10 +65,19 @@ namespace Serilog.Sinks.NewRelicInsights.Sinks
                 string.Format(_configurationOptions.NewRelicBaseUri, _configurationOptions.AccountId));
             httpRequestMessage.Headers.Add("X-Insert-Key", _configurationOptions.LicenseKey);
 
-            using (var content = new StringContent(message))
+            HttpResponseMessage response;
+            try
             {
-                httpRequestMessage.Content = content;
-                var response = await _httpClient.SendAsync(httpRequestMessage);
+                using (var content = new StringContent(message))
+                {
+                    httpRequestMessage.Content = content;
+                    response = await _httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
+                    response.EnsureSuccessStatusCode();
+                }
+            }
+            catch (Exception exception)
+            {
+                SelfLog.WriteLine("Unable to post to NewRelic due to the following error: {0}. Have you configured the logger?", exception.Message);
             }
         }
 
