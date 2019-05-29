@@ -1,4 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/aanoqs7k9swtq7m3?svg=true)](https://ci.appveyor.com/project/mishrsud/serilog-sinks-newrelicinsights)
+[![Nuget Version](https://buildstats.info/nuget/Serilog.Sinks.NewRelicInsights)](https://www.nuget.org/packages/Serilog.Sinks.NewRelicInsights/)
 
 # Summary
 A Serilog Sink that sends log events to NewRelic Insights.
