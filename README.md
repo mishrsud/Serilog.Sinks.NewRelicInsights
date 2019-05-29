@@ -23,6 +23,7 @@ var newRelicConfigurationOptions = new NewRelicConfigurationOptions
                    AccountId = "<your-account-key>",
                    ApplicationName = "ConsoleApp",   // Written to NewRelic
                    EnvironmentName = "Development",  // Written to NewRelic
+                   EventType = "MyEvent",            // Written to NewRelic
                    LicenseKey = "your-license-key"
                };
 ```
@@ -60,6 +61,7 @@ Log.CloseAndFlush();
                 "Args": {
                     "applicationName": "MyApp",
                     "environmentName": "Development",
+                    "eventType": "MyEvent",
                     "accountId": "your-newrelic-account-id",
                     "licenseKey": "your-license-key"
                 }
@@ -73,6 +75,7 @@ Log.CloseAndFlush();
 SETX Serilog__WriteTo__0__Name "NewRelicInsights" /M
 SETX Serilog__WriteTo__0__Args__applicationName "ConsoleApp" /M
 SETX Serilog__WriteTo__0__Args__environmentName "Development" /M
+SETX Serilog__WriteTo__0__Args__eventType "MyEvent" /M
 SETX Serilog__WriteTo__0__Args__accountId "your-account-id" /M
 SETX Serilog__WriteTo__0__Args__licenseKey "your-license-key" /M
 ```
