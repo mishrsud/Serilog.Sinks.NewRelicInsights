@@ -6,6 +6,7 @@
         "Serilog:WriteTo:0:Name": "NewRelicInsights",
         "Serilog:WriteTo:0:Args:applicationName": "ConsoleApp",
         "Serilog:WriteTo:0:Args:environmentName": "Development",
+        "Serilog:WriteTo:0:Args:eventType": "MyEvent",
         "Serilog:WriteTo:0:Args:accountId": "your-account-id",
         "Serilog:WriteTo:0:Args:licenseKey": "your-license-key"
       }

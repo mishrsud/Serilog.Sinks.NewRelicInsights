@@ -12,7 +12,7 @@ namespace SampleApp
         static void Main(string[] args)
         {
             Serilog.Debugging.SelfLog.Enable(Console.Out);
-            Log.Logger = CreateLoggerWithCodeConfiguration();
+            Log.Logger = CreateLoggerWithEnvironmentVariableConfiguration();
 
             Log.Information("I said hello at time {DateTime}, {CorrelationId}", DateTime.UtcNow, Guid.NewGuid());
             
@@ -51,6 +51,7 @@ namespace SampleApp
                    AccountId = "<your-account-key>",
                    ApplicationName = "ConsoleApp",
                    EnvironmentName = "Development",
+                   EventType = "MyEvent",
                    LicenseKey = "your-license-key"
                };
            var logger = new LoggerConfiguration()

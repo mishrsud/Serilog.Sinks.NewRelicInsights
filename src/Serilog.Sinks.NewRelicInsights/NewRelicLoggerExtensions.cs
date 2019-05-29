@@ -32,19 +32,20 @@ namespace Serilog.Sinks.NewRelicInsights
         /// <summary>
         /// Writes events to the NewRelic Insights Sink. Enables configuration through appSettings or other configuration sources
         /// </summary>
-        /// <param name="loggerSinkConfiguration"></param>
-        /// <param name="applicationName"></param>
-        /// <param name="environmentName"></param>
-        /// <param name="accountId"></param>
-        /// <param name="licenseKey"></param>
-        /// <param name="newRelicBaseUri"></param>
-        /// <param name="formatProvider"></param>
-        /// <param name="restrictedToMinimumLevel"></param>
+        /// <param name="loggerSinkConfiguration">The <see cref="LoggerSinkConfiguration"/> being built</param>
+        /// <param name="applicationName">The name of the application (will be logged to NewRelic)</param>
+        /// <param name="environmentName">Name of the environment e.g. Production or Development</param>
+        /// <param name="accountId">NewRelic Account Id</param>
+        /// <param name="licenseKey">NewRelic License key</param>
+        /// <param name="newRelicBaseUri">NewRelic base URL</param>
+        /// <param name="formatProvider">An <see cref="IFormatProvider"/></param>
+        /// <param name="restrictedToMinimumLevel">Minimum log level that would be ingested by the sink</param>
         /// <returns></returns>
         public static LoggerConfiguration NewRelicInsights(
             this LoggerSinkConfiguration loggerSinkConfiguration,
             string applicationName,
             string environmentName,
+            string eventType,
             string accountId,
             string licenseKey,
             string newRelicBaseUri = "https://insights-collector.newrelic.com/v1/accounts/{0}/events",
@@ -58,6 +59,7 @@ namespace Serilog.Sinks.NewRelicInsights
                 AccountId = accountId,
                 ApplicationName = applicationName,
                 EnvironmentName = environmentName,
+                EventType = eventType,
                 LicenseKey = licenseKey,
                 NewRelicBaseUri = newRelicBaseUri
             };

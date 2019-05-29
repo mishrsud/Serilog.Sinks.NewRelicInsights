@@ -48,7 +48,7 @@ namespace Serilog.Sinks.NewRelicInsights.Sinks
                 LogLevel = logEvent.Level.ToString(),
                 Data = logEvent.RenderMessage(_formatProvider),
                 Timestamp = DateTime.UtcNow,
-                EventType = "MyEvent",
+                EventType = _configurationOptions.EventType,
                 ApplicationName = _configurationOptions.ApplicationName,
                 EnvironmentName = _configurationOptions.EnvironmentName
             };
