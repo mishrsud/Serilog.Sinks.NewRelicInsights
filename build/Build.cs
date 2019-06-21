@@ -83,7 +83,6 @@ class Build : NukeBuild
                 .SetNoRestore(true)
                 .SetOutputDirectory(ArtifactsDirectory)
                 .EnableIncludeSource()
-                .EnableIncludeSymbols()
                 .SetVersion(GitVersion.NuGetVersionV2));
         });
 
