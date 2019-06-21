@@ -11,10 +11,9 @@ init:
 
 install:
   # Install repo specific stuff here
-  - ps: dotnet tool install --global Cake.Tool --version 0.33.0
+  - ps: dotnet tool install --global Nuke.GlobalTool --version 0.20.1
 build_script:
-  - ps: dotnet cake build.cake --bootstrap
-  - ps: dotnet cake build.cake --pack
+  - ps: nuke --target publish
 assembly_info:
   # We'll version the binaries and the NuGet package in the build script
   patch: false
@@ -32,17 +31,19 @@ skip_commits:
     - .circleci/config.yml
     - azure-pipelines.yml
 deploy:
-  - provider: NuGet
-    server: https://www.nuget.org/api/v2/package
-    api_key:
-      secure: ElOgwhtjUx4dN75tg5V0kARwPkk6P1KA5C4h7Djea6pPalHaXuxiQfVkQ/9SEvoA
-    skip_symbols: false
-    symbol_server: https://www.nuget.org/api/v2/package
-    artifact: packages
-    on:
-      branch: master
+#  - provider: NuGet
+#    server: https://www.nuget.org/api/v2/package
+#    api_key:
+#      secure: ElOgwhtjUx4dN75tg5V0kARwPkk6P1KA5C4h7Djea6pPalHaXuxiQfVkQ/9SEvoA
+#    skip_symbols: false
+#    symbol_server: https://www.nuget.org/api/v2/package
+#    artifact: packages
+#    on:
+#      branch: master
 environment:
   # No need to pre-warm the `NuGet` cache
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  api_key:
+    secure: ElOgwhtjUx4dN75tg5V0kARwPkk6P1KA5C4h7Djea6pPalHaXuxiQfVkQ/9SEvoA
 
 # This script is adapted from Gabriel Weyer's sample: https://github.com/gabrielweyer/cake-build/
