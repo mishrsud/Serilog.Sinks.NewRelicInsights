@@ -35,6 +35,7 @@ namespace Serilog.Sinks.NewRelicInsights
         /// <param name="loggerSinkConfiguration">The <see cref="LoggerSinkConfiguration"/> being built</param>
         /// <param name="applicationName">The name of the application (will be logged to NewRelic)</param>
         /// <param name="environmentName">Name of the environment e.g. Production or Development</param>
+        /// <param name="eventType">Required property for NewRelic, stored in NewRelic insights</param>
         /// <param name="accountId">NewRelic Account Id</param>
         /// <param name="licenseKey">NewRelic License key</param>
         /// <param name="newRelicBaseUri">NewRelic base URL</param>
