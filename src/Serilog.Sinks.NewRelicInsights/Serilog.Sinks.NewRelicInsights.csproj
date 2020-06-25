@@ -10,7 +10,16 @@
         <PackageTags>newrelic serilog serilog.sink</PackageTags>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Description>A Serilog sink to relay logs to NewRelic Insights API</Description>
-    </PropertyGroup>
+    
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DocumentationFile>.\Serilog.Sinks.NewRelicInsights.xml</DocumentationFile>
         <NoWarn>1701;1702;1591</NoWarn>
